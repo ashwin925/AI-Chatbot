@@ -1,5 +1,6 @@
-import type { FormEvent, React } from "react"
+import type { FormEvent, useState } from "react"
 import { motion } from "framer-motion"
+import React from "react"
 
 interface ChatInputProps {
   input: string
