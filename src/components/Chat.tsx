@@ -4,6 +4,7 @@ import { useChat } from "ai/react"
 import ChatMessage from "./ChatMessage"
 import ChatInput from "./ChatInput"
 import Suggestions from "./Suggestions"
+import React from "react"
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat()
@@ -22,7 +23,7 @@ export default function Chat() {
         ))}
       </div>
       <div className="p-4 bg-white bg-opacity-30 backdrop-blur-md">
-        <Suggestions suggestions={suggestions} onSelect={handleInputChange} />
+      <Suggestions suggestions={suggestions} onSelect={(suggestion) => handleInputChange({ target: { value: suggestion } } as React.ChangeEvent<HTMLInputElement>)} />
         <ChatInput input={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
       </div>
     </motion.div>
