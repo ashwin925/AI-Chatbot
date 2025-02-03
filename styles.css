@@ -1,0 +1,396 @@
+:root {
+    --primary-color: #2962ff;
+    --secondary-color: #0039cb;
+    --gradient-start: #2962ff;
+    --gradient-end: #3d84ff;
+    --background-color: #f0f2f5;
+    --chat-bg: #ffffff;
+    --user-message-bg: linear-gradient(135deg, #2962ff 0%, #3d84ff 100%);
+    --bot-message-bg: #ffffff;
+    --text-color: #333333;
+    --shadow-color: rgba(41, 98, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: var(--background-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.chat-container {
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    background: var(--chat-bg);
+    border-radius: 24px;
+    box-shadow: 0 12px 24px var(--shadow-color);
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.chat-header {
+    padding: 20px 30px;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    background: #4CAF50;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #4CAF50;
+    animation: pulse 2s infinite;
+}
+
+.chat-messages {
+    padding: 30px;
+    gap: 20px;
+    max-height: calc(90vh - 200px);
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) #f0f0f0;
+}
+
+.message {
+    max-width: 75%;
+    padding: 15px 20px;
+    border-radius: 18px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.user-message {
+    background: var(--user-message-bg);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.bot-message {
+    background: var(--bot-message-bg);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.chat-input-container {
+    padding: 20px 30px;
+    background: white;
+    display: flex;
+    gap: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+textarea {
+    flex: 1;
+    padding: 15px 25px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    resize: none;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 12px var(--shadow-color);
+    outline: none;
+}
+
+button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover {
+    background: var(--secondary-color);
+}
+
+.send-icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+/* Add these styles to your existing CSS */
+.bot-message code {
+    background-color: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.bot-message pre {
+    background-color: #f4f4f4;
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 0.5em 0;
+}
+
+.bot-message strong {
+    font-weight: 600;
+}
+
+.bot-message em {
+    font-style: italic;
+}
+
+/* Updated suggestions styling */
+.suggestions-container {
+    padding: 12px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    max-width: 100%;
+}
+
+.suggestion-button {
+    position: relative;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+    line-height: 1.4;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    min-height: 60px;
+}
+
+.suggestion-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.suggestion-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.suggestion-button:hover::before {
+    opacity: 1;
+}
+
+.suggestion-button:active {
+    transform: translateY(0);
+}
+
+.suggestion-button .icon {
+    margin-right: 8px;
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* Ripple effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .suggestions-container {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .suggestion-button {
+        padding: 10px 14px;
+        min-height: 50px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .suggestions-container {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .suggestion-button {
+        padding: 8px 12px;
+        min-height: 45px;
+        font-size: 0.75rem;
+    }
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+    .chat-container {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .chat-header {
+        padding: 15px 20px;
+    }
+
+    .chat-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .chat-messages {
+        padding: 20px;
+    }
+
+    .message {
+        max-width: 85%;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 0;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+}
+
+/* Add these styles to your global CSS file */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(75, 85, 99, 0.5);
+    border-radius: 20px;
+}
+
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(75, 85, 99, 0.5) transparent;
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+} 
