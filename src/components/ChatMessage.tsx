@@ -1,29 +1,30 @@
-import { motion } from "framer-motion"
-import type { Message } from "ai"
-import React from "react"
-
 interface ChatMessageProps {
-  message: Message
+  content: string
+  role: 'user' | 'assistant'
 }
 
-export default function ChatMessage({ message }: ChatMessageProps) {
-  const isUser = message.role === "user"
-
+export default function ChatMessage({ content, role }: ChatMessageProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className={`flex ${isUser ? "justify-end" : "justify-start"}`}
+    <div 
+      className={`
+        flex 
+        ${role === 'user' ? 'justify-end' : 'justify-start'}
+        animate-in slide-in-from-bottom-2
+      `}
     >
       <div
-        className={`max-w-[70%] p-4 rounded-2xl ${
-          isUser ? "bg-indigo-600 text-white" : "bg-white bg-opacity-50 backdrop-blur-md"
-        }`}
+        className={`
+          max-w-[85%] sm:max-w-[75%] px-4 py-3 rounded-lg
+          ${role === 'user' 
+            ? 'bg-blue-600 text-white ml-4' 
+            : 'bg-gray-700 text-gray-100 mr-4'}
+        `}
       >
-        <p className="text-sm">{message.content}</p>
+        <p className="whitespace-pre-wrap break-words text-sm sm:text-base">
+          {content}
+        </p>
       </div>
-    </motion.div>
+    </div>
   )
 }
 

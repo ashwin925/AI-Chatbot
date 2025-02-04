@@ -1,13 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Modern AI Chatbot</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h1>AI Assistant</h1>
+        <div class="status-indicator"></div>
+      </div>
+      
+      <div class="chat-messages" id="chatMessages">
+        <!-- Messages will be displayed here -->
+      </div>
+
+      <!-- Suggestions will be inserted here by JavaScript -->
+      
+      <div class="chat-input-container">
+        <textarea 
+          id="userInput" 
+          placeholder="Type your message here..."
+          rows="1"
+        ></textarea>
+        <button id="sendButton">
+          <svg viewBox="0 0 24 24" class="send-icon">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <script type="module" src="script.js"></script>
   </body>
 </html>

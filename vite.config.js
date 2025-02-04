@@ -1,6 +1,10 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import { VitePWA } from "vite-plugin-pwa"
+import * as dotenv from 'dotenv'
+
+// Load environment variables
+dotenv.config()
 
 export default defineConfig({
   plugins: [
@@ -28,5 +32,11 @@ export default defineConfig({
       },
     }),
   ],
+  define: {
+    // Expose environment variables to the client
+    'process.env': {
+      GEMINI_API_KEY: JSON.stringify(process.env.GEMINI_API_KEY),
+    }
+  },
 })
 

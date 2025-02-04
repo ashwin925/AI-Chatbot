@@ -1,31 +1,66 @@
-import type { FormEvent, useState } from "react"
-import { motion } from "framer-motion"
-import React from "react"
+import { useState, useRef, useEffect } from 'react'
 
 interface ChatInputProps {
   input: string
   handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => void
+  handleSubmit: (e: React.FormEvent) => void
+  isLoading?: boolean
+  className?: string
 }
 
-export default function ChatInput({ input, handleInputChange, handleSubmit }: ChatInputProps) {
+export default function ChatInput({ input, handleInputChange, handleSubmit, isLoading, className }: ChatInputProps) {
+  const [message, setMessage] = useState(input)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (message.trim() && !isLoading) {
+      handleSubmit(e)
+      setMessage('')
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      onSubmit(e)
+    }
+  }
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 150)}px`
+    }
+  }, [message])
+
   return (
-    <form onSubmit={handleSubmit} className="flex items-end">
+    <form onSubmit={onSubmit} className={`relative ${className}`}>
       <textarea
-        value={input}
-        onChange={handleInputChange}
-        placeholder="Type your message..."
-        className="flex-1 p-2 rounded-l-lg bg-white bg-opacity-50 backdrop-blur-md resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        ref={textareaRef}
+        value={message}
+        onChange={(e) => {
+          setMessage(e.target.value)
+          handleInputChange(e)
+        }}
+        onKeyDown={handleKeyDown}
+        placeholder="Type a message..."
+        className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg pr-20
+          resize-none max-h-[150px] min-h-[50px]
+          focus:outline-none focus:ring-2 focus:ring-blue-500
+          placeholder-gray-400"
         rows={1}
+        disabled={isLoading}
       />
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+      <button
         type="submit"
-        className="px-4 py-2 bg-indigo-600 text-white rounded-r-lg hover:bg-indigo-700 transition-colors duration-200"
+        disabled={!message.trim() || isLoading}
+        className="absolute right-2 bottom-2 px-4 py-1.5 bg-blue-600 text-white rounded-md
+          hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
+          disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Send
-      </motion.button>
+        {isLoading ? 'Sending...' : 'Send'}
+      </button>
     </form>
   )
 }
