@@ -6,7 +6,7 @@ function App() {
       <Chat />
     </div>
   )
-}
+} // shit
 
 export default App
 
