@@ -20,4 +20,4 @@ export async function chatWithGemini(prompt: string): Promise<string> {
     throw new Error("Failed to generate response from Gemini")
   }
 }
-
+// 4 streak
